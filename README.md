@@ -1,2 +1,17 @@
 # SBOM_Visualizer
-SBOM Visualizer is a Python GUI tool that parses SBOM JSON files, displays data in an interactive table, and generates license usage graphs (bar and pie charts). It features a file chooser, dynamic loading indicator, and saves graphs as PNGs, helping track software dependencies and licenses.
+SBOM Visualizer is a lightweight Python application that parses Software Bill of Materials (SBOM) JSON files and visualizes the data both in a dynamic table and through interactive graphs. The tool displays detailed license usage statistics using bar and pie charts, making it easier for developers and managers to understand software dependencies and license distributions at a glance.
+
+
+## Description
+The project provides an intuitive interface built with Tkinter where users can load an SBOM JSON file. The application then populates a resizable table with parsed data, applying color-coding to highlight discrepancies between current and latest versions. In addition, it automatically generates graphs that display license usage statistics. These graphs can be saved as PNG images and are customizable in terms of layout, legend positioning, and size. The tool is ideal for software projects that need to keep track of open-source license compliance and dependency management.
+
+## Features
+  - **Interactive Table**: Displays SBOM data with alternating row colors and dynamic resizing.
+  - **Graph Generation**: Automatically generates bar and pie charts to visualize license usage.
+  - **File Chooser**: Easily select SBOM JSON files for processing.
+
+## Built With
+- Python 3.13.2
+
+## Contributing
+Contributions are welcome! Please open an issue or submit a pull request for improvements or bug fixes.
