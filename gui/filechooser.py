@@ -33,7 +33,7 @@ class FileChooser:
             f = open(file_path, 'w')
             f.write(newFolder)
             f.close()
-
+        self.parent.json_file = filename
         # Show rest of UI
         if self.callback:
             self.callback(filename)

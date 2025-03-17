@@ -1,7 +1,19 @@
 {
   "MPL-2.0": 1,
-  "MIT": 3,
-  "Unknown": 6,
+  "Unknown": 60,
+  "MIT": 10,
   "https://www.obfuscar.com/": 1,
-  "Apache-2.0": 1
+  "Apache-2.0": 7,
+  "https://anglesharp.github.io/": 1,
+  "(BSD-2-Clause OR MIT)": 1,
+  "CPOL-1.02": 1,
+  "https://github.com/aspnet/AspNetKatana/": 9,
+  "http://hangfire.io/": 1,
+  "https://github.com/mganss/HtmlSanitizer": 1,
+  "http://imageresizing.net": 2,
+  "https://go.microsoft.com/fwlink/?LinkId=392727": 1,
+  "https://github.com/tonyqus/npoi": 1,
+  "https://github.com/serilog/serilog-sinks-console": 1,
+  "IPL-1.0": 1,
+  "https://dot.net/": 7
 }

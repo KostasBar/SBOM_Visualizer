@@ -100,16 +100,9 @@ class TableManager:
         self.frame.grid_columnconfigure(0, weight=1)
         self.frame.grid()
         loading_label.destroy()
-        # Show a loading indicator before generating graphs
-        loading_label = tk.Label(self.frame, text="Loading graphs...", font=("Arial", 16))
-        loading_label.grid(row=2, column=0, columnspan=2, pady=10)
-        self.frame.update()  # Force update so the label appears
 
         # Call your graph generator function
         sbom.graphGenerator.generate_graphs()
-
-        # Remove the loading indicator
-        loading_label.destroy()
         
         self.table.bind("<<TreeviewSelect>>", self.on_treeview_select)
 
