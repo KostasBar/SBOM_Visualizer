@@ -3,6 +3,9 @@ import os
 import json
 
 def generate_graphs():
+    """
+    Genarates a Bar-Plot and a Pie-Chart based on the license usage of the SBOM
+    """
     # Construct the file path for licence.json relative to this script
     file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "licence.json")
 

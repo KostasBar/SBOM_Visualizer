@@ -9,7 +9,7 @@ class TableManager:
     def __init__(self, parent):
         self.parent = parent
         
-        self.frame = tk.Frame(parent, width=1000, height=1000, bd=1, relief="solid")
+        self.frame = tk.Frame(parent, bd=1, width=1000, height=1000, relief="solid", border=0)
         self.frame.grid(row=2, column=0, padx=20, pady=10, sticky='nsew')
         self.frame.grid_propagate(False)  # Keep size
         
@@ -30,12 +30,15 @@ class TableManager:
         
         # Row Styling
         style = ttk.Style()
-        style.configure("Custom.Treeview", 
-                        rowheight=25, 
-                        borderwidth=1, 
-                        relief="solid",
-                        font=("TkDefaultFont", 10))
+        style.configure("Custom.Treeview",
+                rowheight=30,
+                font=("Segoe UI", 10),
+                background="#ffffff",
+                fieldbackground="#f9f9f9",
+                bordercolor="#dcdcdc",)
         style.map("Custom.Treeview", background=[('selected', '#90D5FF')],)
+        style = ttk.Style()
+        style.theme_use("clam")
 
         self.normal_font = tkFont.Font(family="TkDefaultFont", size=10)
         self.bold_font = tkFont.Font(family="TkDefaultFont", size=10, weight="bold")
@@ -100,8 +103,7 @@ class TableManager:
         self.frame.grid_columnconfigure(0, weight=1)
         self.frame.grid()
         loading_label.destroy()
-
-        # Call your graph generator function
+        
         sbom.graphGenerator.generate_graphs()
         
         self.table.bind("<<TreeviewSelect>>", self.on_treeview_select)

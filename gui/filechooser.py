@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 from tkinter import filedialog as fd
 import os
 
@@ -14,7 +15,7 @@ class FileChooser:
         self.frame.grid(row=0, column=0, padx=20, pady=20, sticky='w')
         self.label = tk.Label(self.frame, text="Select SBOM .json file")
         self.label.grid(row=0, column=0, padx=10, sticky='w')
-        self.button = tk.Button(self.frame, text="Open a File", command=self.select_file)
+        self.button = ttk.Button(self.frame, text="Open a File", command=self.select_file)
         self.button.grid(row=0, column=1, padx=10, sticky='w')
 
     def select_file(self):
