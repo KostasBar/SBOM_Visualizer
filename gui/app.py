@@ -6,6 +6,7 @@ from .tablemanager import TableManager
 from .filechooser import FileChooser
 from .graphmanager import GraphManager
 import sbom.sbom_json_to_table
+import sbom.sbom_parser
 from tkinter import filedialog as fd
 import os
 
@@ -32,27 +33,28 @@ class App(tk.Tk):
 
         self.left_frame = tk.Frame(content_frame, borderwidth=4, relief="groove")
         self.left_frame.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
-        self.right_frame = tk.Frame(content_frame, borderwidth=4, relief="groove")
-        self.right_frame.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
         # Add components in the left frame.
         self.file_chooser = FileChooser(self.left_frame, self.file_selected)
-        self.table_manager = TableManager(self.left_frame)
-        self.checkbox_panel = CheckboxPanel(self.left_frame, self.table_manager)
+        # self.table_manager = TableManager(self.left_frame)
+        # self.checkbox_panel = CheckboxPanel(self.left_frame, self.table_manager)
 
-        # Add components in the right frame.
-        self.graph_viewer = GraphManager(self.right_frame)
         # Generate PDF Button in right_frame (aligned to left).
-        self.button = ttk.Button(self.right_frame, text="Export As PDF", command=self.generate_pdf)
-        self.button.grid(row=0, column=0, padx=15, pady=10, sticky='w')
+        self.button = ttk.Button(self.left_frame, text="Export As PDF", command=self.generate_pdf)
+        self.button.grid(row=1, column=0, padx=15, pady=10, sticky='w')
 
-        # Force layout update, then set the window geometry to the content size.
-        self.update_idletasks()
-        req_width = self.winfo_reqwidth()
-        req_height = self.winfo_reqheight()
-        self.geometry(f"{req_width}x{req_height}")
+        self.button.grid(row=1, column=0, padx=(30, 5), pady=10, sticky='w')
 
-        # Disable window resizing.
+        ttk.Label(self.left_frame, text="Export as Chart:").grid(row=1, column=1, padx=(0, 0), pady=10, sticky='e')
+
+        self.chart_var = tk.StringVar()
+        self.chart_combobox = ttk.Combobox(self.left_frame, width=10, textvariable=self.chart_var, state="readonly")
+        self.chart_combobox['values'] = ('Bar', 'Pie')
+        self.chart_combobox.grid(row=1, column=2, padx=(0, 15), pady=10, sticky='w')
+        self.chart_combobox.current(1)
+        self.chart_combobox.bind("<<ComboboxSelected>>", self.chart_selected)   
+
+        # # Disable window resizing.
         self.resizable(False, False)
 
         # Set the window icon.
@@ -64,19 +66,30 @@ class App(tk.Tk):
 
     def file_selected(self, filename):
         self.json_file = filename
-        self.checkbox_panel.show()
-        self.table_manager.create_table(filename)
+        sbom.sbom_parser.get_table_rows(filename)
 
     def generate_pdf(self):
-        folder = fd.askdirectory(title='Select folder to save PDF', initialdir='/')
-        filename = os.path.splitext(os.path.basename(self.json_file))[0]
-        output_file = os.path.join(folder, filename)
-        if folder and folder != "":
-            try:
-                sbom.sbom_json_to_table.generate_pdf_from_sbom(self.json_file, output_file)
-                messagebox.showinfo("Success", f"PDF Generated: {output_file}")
-            except Exception as e:
-                messagebox.showerror("Error", f"Failed to generate PDF: {e}")
+        if self.json_file and self.json_file != '':
+            folder = fd.askdirectory(title='Select folder to save PDF', initialdir='/')
+            filename = os.path.splitext(os.path.basename(self.json_file))[0]
+            output_file = os.path.join(folder, filename)
+            if folder and folder != "":
+                try:
+                    sbom.sbom_json_to_table.generate_pdf_from_sbom(self.json_file, output_file)
+                    messagebox.showinfo("Success", f"PDF Generated: {output_file}")
+                except Exception as e:
+                    messagebox.showerror("Error", f"Failed to generate PDF: {e}")
+        else:
+            messagebox.showwarning("Warning!", "Please select a valid SBOM json file first!")
+
+    def chart_selected(self, event):
+        if self.json_file and self.json_file != '':
+
+            selected = self.chart_combobox.get()
+            if selected == "Pie":
+                sbom.graphGenerator.generate_graphs(2)
+            elif selected == "Bar":
+                sbom.graphGenerator.generate_graphs(1)
 
 if __name__ == "__main__":
     app = App()

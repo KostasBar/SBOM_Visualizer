@@ -153,8 +153,3 @@ def generate_pdf_from_sbom(json_file, output_pdf):
         license_table]
     doc.build(elements)
     print("PDF generated:", output_pdf)
-
-# if __name__ == "__main__":
-#     json_file = input("Provide path of bom.json: ") #r"C:\Users\konba\Desktop\BigBom.json"
-#     output_pdf = input("Provide a filename: ") #"SBOM_Table.pdf"
-#     generate_pdf_from_sbom(json_file, output_pdf+".pdf")
